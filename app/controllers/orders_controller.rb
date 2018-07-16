@@ -9,13 +9,13 @@ class OrdersController < ApplicationController
 
   # GET /orders_include
   def index_with_include
-    @orders = Order.includes(:customer).all
+    @orders = Order.all.includes(:customer)
     render "index"
   end
 
   # GET /orders_join
   def index_with_join
-    @orders = Order.joins(:customer).includes(:customer).all
+    @orders = Order.all.joins(:customer).includes(:customer)
     render "index"
   end
 
