@@ -7,6 +7,18 @@ class OrdersController < ApplicationController
     @orders = Order.all
   end
 
+  # GET /orders_include
+  def index_with_include
+    @orders = Order.includes(:customer).all
+    render "index"
+  end
+
+  # GET /orders_join
+  def index_with_join
+    @orders = Order.joins(:customer).includes(:customer).all
+    render "index"
+  end
+
   # GET /orders/1
   # GET /orders/1.json
   def show

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_07_15_220542) do
+ActiveRecord::Schema.define(version: 2018_07_15_221023) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,8 @@ ActiveRecord::Schema.define(version: 2018_07_15_220542) do
     t.string "status"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "order_item_id"
+    t.index ["order_item_id"], name: "index_deliveries_on_order_item_id"
     t.index ["shipping_company_id"], name: "index_deliveries_on_shipping_company_id"
   end
 
@@ -63,6 +65,7 @@ ActiveRecord::Schema.define(version: 2018_07_15_220542) do
     t.datetime "updated_at", null: false
   end
 
+  add_foreign_key "deliveries", "order_items"
   add_foreign_key "deliveries", "shipping_companies"
   add_foreign_key "order_items", "orders"
   add_foreign_key "order_items", "products"

@@ -5,10 +5,11 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+factor = 1000
 Product.create(name: 'Pen Drive', description: 'Pen Drive with TDC logo', amount: 10.99)
 Product.create(name: 'Mouse', description: 'Mouse optical', amount: 39.99)
 Product.create(name: 'Notebook one', description: 'Notebook top!', amount: 2500)
-5000.times do |number|
+(factor*5).times do |number|
     Product.create(name: "Notebook #{number}", description: "Notebook #{number}", amount: 2900.99+number)
 end
 
@@ -25,9 +26,19 @@ Customer.create(name:'Manoel Ramos', score: 9)
 Customer.create(name:'Gabriela Pontes', score: 7)
 Customer.create(name:'Maria de Medeiros', score: 9)
 
-10000.times do |number|
+ShippingCompany.create(name:'Transportadora All', delivery_cost: 0.01)
+ShippingCompany.create(name:'Transportadora Plus', delivery_cost: 0.03)
+
+(factor*10).times do |number|
   Order.create(
-    customer_id: Random.rand(12),
-    order_items: [OrderItem.new(product_id: Random.rand(5000), product_quantity: Random.rand(5))]
+    customer_id: rand(1..12),
+    order_items: [
+      OrderItem.new(
+        product_id: rand(1..factor*5),
+        product_quantity: rand(1..5),
+        delivery: Delivery.new(shipping_company_id: rand(1..2), status: ["ENVIADO AO CLIENTE","ENTREGUE","PENDENTE"].sample)
+      )
+    ],
+    status: ["EM ABERTO","ENTREGUE"].sample
   )
 end
